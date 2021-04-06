@@ -30,12 +30,16 @@
         <script><![CDATA[(function executeRule(current, previous /*null when async*/) {
 
 	// Add your code here
-	var restrictedDataUtils = new RestrictedDataUtils();
-	var stringToProcess = current.description;
-	stringToProcess = restrictedDataUtils.checkSSN(stringToProcess);
-	stringToProcess = restrictedDataUtils.checkCC(stringToProcess);
-	stringToProcess = restrictedDataUtils.checkPIN(stringToProcess);
-	current.description = restrictedDataUtils.checkPassword(stringToProcess);
+	var restrictedDataUtils = new RestrictedDataUtils();		
+	//not masking
+	var detected = restrictedDataUtils.checkPassword(current.description, false);
+	if (detected) {
+		gs.info('detected Password');
+		current.setAbortAction(true);
+	}
+	//masking
+	//current.description = restrictedDataUtils.checkPIN(current.description, true);	
+	
 
 })(current, previous);]]></script>
         <sys_class_name>sys_script</sys_class_name>
@@ -44,7 +48,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>a6be23b92f132010ee74bcb62799b620</sys_id>
-        <sys_mod_count>7</sys_mod_count>
+        <sys_mod_count>13</sys_mod_count>
         <sys_name>MaskRestrictedIncidentData</sys_name>
         <sys_overrides/>
         <sys_package display_value="RestrictedDataUtils" source="91ab23b52f132010ee74bcb62799b600">91ab23b52f132010ee74bcb62799b600</sys_package>
@@ -52,7 +56,7 @@
         <sys_scope display_value="RestrictedDataUtils">91ab23b52f132010ee74bcb62799b600</sys_scope>
         <sys_update_name>sys_script_a6be23b92f132010ee74bcb62799b620</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2021-04-05 23:36:05</sys_updated_on>
+        <sys_updated_on>2021-04-06 15:52:04</sys_updated_on>
         <template/>
         <when>before</when>
     </sys_script>
